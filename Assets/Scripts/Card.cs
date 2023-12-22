@@ -23,25 +23,28 @@ public class Card : MonoBehaviour
 
     public void openCard()
     {
-        animator.SetBool("isOpen", true);
-
-        if (!is_Opened)
+        if (GameManager.I.secondCard == null)
         {
-            gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.gray;
-            is_Opened = true;
-        }
+            animator.SetBool("isOpen", true);
 
-        //front.gameObject.SetActive(true); //카드를 뒤집으면 더이상 필요 Active를 껏다켰다 할 필요가 없음.
-        //back.gameObject.SetActive(false);
+            if (!is_Opened)
+            {
+                gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.gray;
+                is_Opened = true;
+            }
 
-        if (GameManager.I.firstCard == null)
-        {
-            GameManager.I.firstCard = gameObject.GetComponent<Card>();
-        }
-        else
-        {
-            GameManager.I.secondCard = gameObject.GetComponent<Card>();
-            GameManager.I.isMatched();
+            //front.gameObject.SetActive(true); //카드를 뒤집으면 더이상 필요 Active를 껏다켰다 할 필요가 없음.
+            //back.gameObject.SetActive(false);
+
+            if (GameManager.I.firstCard == null)
+            {
+                GameManager.I.firstCard = gameObject.GetComponent<Card>();
+            }
+            else
+            {
+                GameManager.I.secondCard = gameObject.GetComponent<Card>();
+                GameManager.I.isMatched();
+            }
         }
     }
 
