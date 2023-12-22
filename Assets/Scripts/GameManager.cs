@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager I;
     public Text time_Text;
-    public GameObject end_Text;
+    public GameObject end_Canvas;
     public Text name_Text;
     public Card firstCard;
     public Card secondCard;
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     float time = 30f;
     bool is_noTime = false;
+    int matchCnt = 0;
 
     private void Awake()
     {
@@ -33,6 +34,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         time = 30f;
         is_noTime = false;
+        matchCnt = 0;
+
+        end_Canvas.SetActive(false);
+        name_Text.gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -89,6 +94,8 @@ public class GameManager : MonoBehaviour
         name_Text.gameObject.SetActive(true); // 이름 text 활성화
         Invoke("close_nameText", 1f);
 
+        matchCnt++;
+
     }
 
     void close_nameText()
@@ -104,6 +111,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         Time.timeScale = 0f;
-        end_Text.gameObject.SetActive(true);
+        end_Canvas.transform.GetChild(1).GetComponent<Text>().text = "시도 횟수 : " + matchCnt;
+        end_Canvas.SetActive(true);
     }
 }
