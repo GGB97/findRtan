@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Text name_Text;
     public Card firstCard;
     public Card secondCard;
+    public AudioClip matchSound;
 
 
     float time = 30f;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     int matchCnt = 0;
     float penalty = 3f;
     float selectLimit = 5f;
+    AudioSource audioSource;
 
     private void Awake()
     {
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour
 
         end_Canvas.SetActive(false);
         name_Text.gameObject.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();
     }
     // Update is called once per frame
     void Update()
@@ -83,6 +87,8 @@ public class GameManager : MonoBehaviour
         {
             selectLimit = 5f;
             name_Text.text = firstCard.myName;
+
+            audioSource.PlayOneShot(matchSound);
 
             firstCard.destroyCard();
             secondCard.destroyCard();
