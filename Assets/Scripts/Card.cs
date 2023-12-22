@@ -57,8 +57,8 @@ public class Card : MonoBehaviour
     void closeCardInvoke()
     {
         animator.SetBool("isOpen", false);
-        front.gameObject.SetActive(false);
-        back.gameObject.SetActive(true);
+        //front.gameObject.SetActive(false);
+        //back.gameObject.SetActive(true);
     }
     public void closeCard()
     {
