@@ -11,6 +11,7 @@ public class Card : MonoBehaviour
     Transform back;
 
     Animator animator;
+    AudioSource openSound;
 
     bool is_Opened = false;
 
@@ -19,6 +20,7 @@ public class Card : MonoBehaviour
         front = transform.GetChild(0);
         back = transform.GetChild(1);
         animator = GetComponent<Animator>();
+        openSound = GetComponent<AudioSource>();
     }
 
     public void openCard()
@@ -26,6 +28,7 @@ public class Card : MonoBehaviour
         if (GameManager.I.secondCard == null)
         {
             animator.SetBool("isOpen", true);
+            openSound.Play();
 
             if (!is_Opened)
             {
