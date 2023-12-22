@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     bool is_noTime = false;
     int matchCnt = 0;
     float penalty = 3f;
+    float selectLimit = 5f;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
         is_noTime = false;
         matchCnt = 0;
         penalty = 3f;
+        selectLimit = 5f;
 
         end_Canvas.SetActive(false);
         name_Text.gameObject.SetActive(false);
@@ -60,6 +62,16 @@ public class GameManager : MonoBehaviour
 
         if (time <= 0)
             GameOver();
+
+        if(firstCard != null && secondCard == null)
+        {
+            selectLimit -= Time.deltaTime;
+            if (selectLimit <= 0)
+            {
+                firstCard.closeCardInvoke();
+                firstCard = null; selectLimit = 5f;
+            }
+        }
     }
 
     public void isMatched()
@@ -69,6 +81,7 @@ public class GameManager : MonoBehaviour
 
         if (firstKey == secondKey)
         {
+            selectLimit = 5f;
             name_Text.text = firstCard.myName;
 
             firstCard.destroyCard();

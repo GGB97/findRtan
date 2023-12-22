@@ -57,7 +57,7 @@ public class Card : MonoBehaviour
         Invoke("destroyCardInvoke", 1.0f);
     }
 
-    void closeCardInvoke()
+    public void closeCardInvoke()
     {
         animator.SetBool("isOpen", false);
         //front.gameObject.SetActive(false);
@@ -67,4 +67,8 @@ public class Card : MonoBehaviour
     {
         Invoke("closeCardInvoke", 1.0f);
     }
+    //public void closeCard(float delay) // closeCarkInvoke 함수를 public으로 변경하는게 나은지 이렇게 쓰는게 더 나은지.. 성능은 전자가 더 괜찮을것같은데
+    //{
+    //    Invoke("closeCardInvoke", delay); // 어차피 바로 시작해야하는건데 Invoke를 쓰기엔 낭비같다.
+    //}
 }
