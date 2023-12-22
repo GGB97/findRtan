@@ -12,6 +12,8 @@ public class Card : MonoBehaviour
 
     Animator animator;
 
+    bool is_Opened = false;
+
     private void Start()
     {
         front = transform.GetChild(0);
@@ -22,6 +24,12 @@ public class Card : MonoBehaviour
     public void openCard()
     {
         animator.SetBool("isOpen", false);
+
+        if (!is_Opened)
+        {
+            gameObject.transform.GetChild(1).GetComponent<SpriteRenderer>().color = Color.gray;
+            is_Opened = true;
+        }
 
         front.gameObject.SetActive(true);
         back.gameObject.SetActive(false);

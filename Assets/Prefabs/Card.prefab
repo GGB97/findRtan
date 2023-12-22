@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myKey: 0
+  myName: 
 --- !u!95 &2593916481765121865
 Animator:
   serializedVersion: 5
