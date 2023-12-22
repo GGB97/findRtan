@@ -23,7 +23,7 @@ public class Card : MonoBehaviour
 
     public void openCard()
     {
-        animator.SetBool("isOpen", false);
+        animator.SetBool("isOpen", true);
 
         if (!is_Opened)
         {
@@ -31,8 +31,8 @@ public class Card : MonoBehaviour
             is_Opened = true;
         }
 
-        front.gameObject.SetActive(true);
-        back.gameObject.SetActive(false);
+        //front.gameObject.SetActive(true); //카드를 뒤집으면 더이상 필요 Active를 껏다켰다 할 필요가 없음.
+        //back.gameObject.SetActive(false);
 
         if (GameManager.I.firstCard == null)
         {
