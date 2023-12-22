@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     float time = 30f;
     bool is_noTime = false;
     int matchCnt = 0;
+    float penalty = 3f;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         time = 30f;
         is_noTime = false;
         matchCnt = 0;
+        penalty = 3f;
 
         end_Canvas.SetActive(false);
         name_Text.gameObject.SetActive(false);
@@ -84,6 +86,8 @@ public class GameManager : MonoBehaviour
         else
         {
             name_Text.text = "½ÇÆÐ!!";
+
+            time -= penalty;
 
             firstCard.closeCard();
             secondCard.closeCard();
