@@ -37,6 +37,7 @@ public class shuffle : MonoBehaviour
                 GameObject card = Instantiate(base_card, new Vector3((j * 1.4f) - 2.1f, (i * 1.4f) - 2f, 0), Quaternion.identity, gameObject.transform);
                 card.transform.GetChild(0).transform.GetComponent<SpriteRenderer>().sprite = texture[rtans[cnt]];
                 card.transform.GetComponent<Card>().myKey = rtans[cnt];
+                card.transform.GetComponent<Card>().myName = rtans[cnt].ToString(); // 추후 이름을 Enum으로 해서 넣으면 될듯?
                 cnt++;
             }
         }

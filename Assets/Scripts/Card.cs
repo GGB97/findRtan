@@ -5,6 +5,7 @@ using UnityEngine;
 public class Card : MonoBehaviour
 {
     public int myKey;
+    public string myName;
 
     Transform front;
     Transform back;

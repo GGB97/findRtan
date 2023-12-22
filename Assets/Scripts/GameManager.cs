@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager I;
     public Text time_Text;
     public GameObject end_Text;
+    public Text name_Text;
 
     float time = 30f;
 
@@ -36,6 +37,9 @@ public class GameManager : MonoBehaviour
     {
         time -= Time.deltaTime;
         time_Text.text = time.ToString("N2");
+
+        if (time <= 0)
+            GameOver();
     }
 
     public void isMatched()
@@ -45,13 +49,14 @@ public class GameManager : MonoBehaviour
 
         if (firstKey == secondKey)
         {
+            name_Text.text = firstCard.myName;
+
             firstCard.destroyCard();
             secondCard.destroyCard();
 
-            if(GameObject.Find("Cards").transform.childCount == 2)
+            if (GameObject.Find("Cards").transform.childCount == 2)
             {
-                Time.timeScale = 0f;
-                end_Text.gameObject.SetActive(true);
+                GameOver();
             }
             else
             {
@@ -60,15 +65,32 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            name_Text.text = "실패!!";
+
             firstCard.closeCard();
             secondCard.closeCard();
         }
 
         firstCard = null; secondCard = null;
+
+        name_Text.gameObject.SetActive(true); // 이름 text 활성화
+        Invoke("close_nameText", 1f);
+
+    }
+
+    void close_nameText()
+    {
+        name_Text.gameObject.SetActive(false);
     }
 
     public void reStart()
     {
         SceneManager.LoadScene("MainScene");
+    }
+
+    void GameOver()
+    {
+        Time.timeScale = 0f;
+        end_Text.gameObject.SetActive(true);
     }
 }
