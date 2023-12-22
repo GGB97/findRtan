@@ -11,11 +11,12 @@ public class GameManager : MonoBehaviour
     public Text time_Text;
     public GameObject end_Text;
     public Text name_Text;
-
-    float time = 30f;
-
     public Card firstCard;
     public Card secondCard;
+
+
+    float time = 30f;
+    bool is_noTime = false;
 
     private void Awake()
     {
@@ -31,12 +32,24 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         time = 30f;
+        is_noTime = false;
     }
     // Update is called once per frame
     void Update()
     {
         time -= Time.deltaTime;
         time_Text.text = time.ToString("N2");
+
+        if(!is_noTime && time < 10f) // 남은 시간별로 time_Text 색상 변경
+        {
+            is_noTime = true;
+            time_Text.color = Color.red;
+        }
+        else if(is_noTime && time > 10f)
+        {
+            is_noTime = false;
+            time_Text.color = Color.white;
+        }
 
         if (time <= 0)
             GameOver();
@@ -60,7 +73,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                time += 5f;
+                time += 5f; // 그냥 맞추면 시간 늘어나면 좋을거 같아서 넣음.
             }
         }
         else
