@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
         firstCard = null; secondCard = null;
 
         name_Text.gameObject.SetActive(true); // 이름 text 활성화
-        Invoke("close_nameText", 1f);
+        Invoke(nameof(close_nameText), 1f);
 
         matchCnt++;
     }

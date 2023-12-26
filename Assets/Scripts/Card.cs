@@ -60,7 +60,7 @@ public class Card : MonoBehaviour
     }
     public void destroyCard()
     {
-        Invoke("destroyCardInvoke", 1.0f);
+        Invoke(nameof(destroyCardInvoke), 1.0f);
     }
 
     public void closeCardInvoke()
@@ -71,7 +71,7 @@ public class Card : MonoBehaviour
     }
     public void closeCard()
     {
-        Invoke("closeCardInvoke", 1.0f);
+        Invoke(nameof(closeCardInvoke), 1.0f);
     }
     //public void closeCard(float delay) // closeCarkInvoke 함수를 public으로 변경하는게 나은지 이렇게 쓰는게 더 나은지.. 성능은 전자가 더 괜찮을것같은데
     //{
