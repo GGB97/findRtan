@@ -7,12 +7,17 @@ public class AudioManager : MonoBehaviour
     public AudioClip bgm;
 
     AudioSource audioSource;
-    // Start is called before the first frame update
-    void Start()
+
+
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
 
         audioSource.clip = bgm;
+    }
+
+    void Start()
+    {
         audioSource.Play();
     }
 }

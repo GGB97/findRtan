@@ -16,7 +16,7 @@ public class Card : MonoBehaviour
 
     bool is_Opened = false;
 
-    private void Start()
+    private void Awake()
     {
         front = transform.GetChild(0);
         back = transform.GetChild(1);
@@ -77,4 +77,9 @@ public class Card : MonoBehaviour
     //{
     //    Invoke("closeCardInvoke", delay); // 어차피 바로 시작해야하는건데 Invoke를 쓰기엔 낭비같다.
     //}
+    
+    public void ShowCard()
+    {
+        animator.SetBool("isOpen", true);
+    }
 }

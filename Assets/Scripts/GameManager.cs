@@ -14,11 +14,14 @@ public class GameManager : MonoBehaviour
     public Card firstCard;
     public Card secondCard;
     public AudioClip matchSound;
+    public GameObject Cards;
 
     public static int level = 1;
 
     float time = 30f;
+    float stime = 3f;
     bool is_noTime = false;
+    bool is_Running = false;
     int matchCnt = 0;
     int sCnt = 0;
     int fCnt = 0;
@@ -26,18 +29,21 @@ public class GameManager : MonoBehaviour
 
     float penalty = 3f;
     float selectLimit = 5f;
+
     AudioSource audioSource;
+    Card[] Deck;
 
     private void Awake()
     {
         I = this;
+        Game_init();
     }
 
     private void Start()
     {
-        Game_init();
-
-
+        Deck = Cards.GetComponentsInChildren<Card>();
+        ShowAll();
+        Invoke(nameof(CloseAll), stime);
     }
 
     private void Game_init()
@@ -45,6 +51,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         time = 30f;
         is_noTime = false;
+        is_Running = false;
         matchCnt = 0;
         sCnt = 0;
         fCnt = 0;
@@ -54,11 +61,13 @@ public class GameManager : MonoBehaviour
         {
             penalty = 5f;
             selectLimit = 3f;
+            stime = 2f;
         }
         else
         {
             penalty = 3f;
             selectLimit = 5f;
+            stime = 3f;
         }
 
         end_Canvas.SetActive(false);
@@ -70,8 +79,16 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (is_Running)
-        time -= Time.deltaTime;
-        time_Text.text = time.ToString("N2");
+        {
+            time -= Time.deltaTime;
+            time_Text.text = time.ToString("N2");
+        }
+        else
+        {
+            stime -= Time.deltaTime;
+            time_Text.text = stime.ToString("N2");
+        }
+        
 
         if(!is_noTime && time < 10f) // 남은 시간별로 time_Text 색상 변경
         {
@@ -165,5 +182,22 @@ public class GameManager : MonoBehaviour
         end_Canvas.transform.GetChild(5).GetComponent<Text>().text = "점수 : " + totalPoint;
 
         end_Canvas.SetActive(true);
+    }
+
+    void ShowAll()
+    {
+        foreach(Card i in Deck)
+        {
+            i.ShowCard();
+        }
+    }
+
+    void CloseAll()
+    {
+        foreach(Card i in Deck)
+        {
+            i.closeCardInvoke();
+        }
+        is_Running = true;
     }
 }
