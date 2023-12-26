@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Card secondCard;
     public AudioClip matchSound;
 
+    public static int level = 1;
 
     float time = 30f;
     bool is_noTime = false;
@@ -35,12 +36,22 @@ public class GameManager : MonoBehaviour
 
     private void Game_init()
     {
+        Debug.Log("init!");
         Time.timeScale = 1f;
         time = 30f;
         is_noTime = false;
         matchCnt = 0;
-        penalty = 3f;
-        selectLimit = 5f;
+        
+        if(level == 3)
+        {
+            penalty = 3f + level;
+            selectLimit = 5f - level;
+        }
+        else
+        {
+            penalty = 3f;
+            selectLimit = 5f;
+        }
 
         end_Canvas.SetActive(false);
         name_Text.gameObject.SetActive(false);
@@ -128,7 +139,7 @@ public class GameManager : MonoBehaviour
 
     public void reStart()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("LevelScene");
     }
 
     void GameOver()
