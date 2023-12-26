@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public int myKey;
-    public string myName;
+    public int myKey;       // 같은 카드인지 확인하기 위한 Key
+    public string myName;   // 이 이미지의 주인이 누구인지 확인하기 위한 이름 (지금은 Key와 동일한 값이 들어가지만 enum으로 변형 가능성 있음)
+    public int myID;        // 중복 검사를 위한 ID
 
     Transform front;
     Transform back;
@@ -25,6 +26,7 @@ public class Card : MonoBehaviour
 
     public void openCard()
     {
+        // 2번째 카드 슬롯이 비어 있을 때 (카드를 한 장만 선택하고 있는 경우)
         if (GameManager.I.secondCard == null)
         {
             animator.SetBool("isOpen", true);
@@ -43,7 +45,8 @@ public class Card : MonoBehaviour
             {
                 GameManager.I.firstCard = gameObject.GetComponent<Card>();
             }
-            else
+            // 첫 번째 카드의 ID가 나와 같은 ID가 아닐 때(카드를 빠른 속도로 더블 클릭 시 자신이 first/second 둘 다 들어가는 경우가 발생)
+            else if (GameManager.I.firstCard.myID != myID) 
             {
                 GameManager.I.secondCard = gameObject.GetComponent<Card>();
                 GameManager.I.isMatched();
