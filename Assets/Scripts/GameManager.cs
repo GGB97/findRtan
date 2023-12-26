@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         time = 30f;
         is_noTime = false;
-        is_Running = true;
         matchCnt = 0;
         sCnt = 0;
         fCnt = 0;
