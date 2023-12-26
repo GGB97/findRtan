@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
     float time = 30f;
     bool is_noTime = false;
     int matchCnt = 0;
+    int sCnt = 0;
+    int fCnt = 0;
+    int totalPoint = 0;
+
     float penalty = 3f;
     float selectLimit = 5f;
     AudioSource audioSource;
@@ -32,20 +36,25 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Game_init();
+
+
     }
 
     private void Game_init()
     {
-        Debug.Log("init!");
         Time.timeScale = 1f;
         time = 30f;
         is_noTime = false;
+        is_Running = true;
         matchCnt = 0;
-        
-        if(level == 3)
+        sCnt = 0;
+        fCnt = 0;
+        totalPoint = 0;
+
+        if (level == 3)
         {
-            penalty = 3f + level;
-            selectLimit = 5f - level;
+            penalty = 5f;
+            selectLimit = 3f;
         }
         else
         {
@@ -61,6 +70,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (is_Running)
         time -= Time.deltaTime;
         time_Text.text = time.ToString("N2");
 
@@ -111,6 +121,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 time += 5f; // 그냥 맞추면 시간 늘어나면 좋을거 같아서 넣음.
+                sCnt++;
             }
         }
         else
@@ -121,6 +132,8 @@ public class GameManager : MonoBehaviour
 
             firstCard.closeCard();
             secondCard.closeCard();
+
+            fCnt++;
         }
 
         firstCard = null; secondCard = null;
@@ -129,7 +142,6 @@ public class GameManager : MonoBehaviour
         Invoke("close_nameText", 1f);
 
         matchCnt++;
-
     }
 
     void close_nameText()
@@ -145,7 +157,14 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         Time.timeScale = 0f;
-        end_Canvas.transform.GetChild(1).GetComponent<Text>().text = "시도 횟수 : " + matchCnt;
+        totalPoint = (sCnt * 10) - (fCnt * 5);
+        if (totalPoint < 0) totalPoint = 0;
+
+        end_Canvas.transform.GetChild(2).GetComponent<Text>().text = "시도 횟수 : " + matchCnt;
+        end_Canvas.transform.GetChild(3).GetComponent<Text>().text = "성공 : " + sCnt;
+        end_Canvas.transform.GetChild(4).GetComponent<Text>().text = "실패 : " + fCnt;
+        end_Canvas.transform.GetChild(5).GetComponent<Text>().text = "점수 : " + totalPoint;
+
         end_Canvas.SetActive(true);
     }
 }
