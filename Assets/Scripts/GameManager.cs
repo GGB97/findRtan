@@ -8,13 +8,15 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager I;
-    public Text time_Text;
     public GameObject end_Canvas;
+    public GameObject Cards; 
+    public Text time_Text;
     public Text name_Text;
+    public Text lecord_Text;
     public Card firstCard;
     public Card secondCard;
     public AudioClip matchSound;
-    public GameObject Cards;
+    
 
     public static int level = 1;
 
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
     int sCnt = 0;
     int fCnt = 0;
     int totalPoint = 0;
+    int bestLecord = 0;
 
     float penalty = 3f;
     float selectLimit = 5f;
@@ -44,6 +47,8 @@ public class GameManager : MonoBehaviour
         Deck = Cards.GetComponentsInChildren<Card>();
         ShowAll();
         Invoke(nameof(CloseAll), stime);
+
+        lecord_Text.text = "최고기록 : " + bestLecord.ToString();
     }
 
     private void Game_init()
@@ -74,6 +79,15 @@ public class GameManager : MonoBehaviour
         name_Text.gameObject.SetActive(false);
 
         audioSource = GetComponent<AudioSource>();
+
+        if(PlayerPrefs.HasKey("LecordLevel" + level.ToString()))
+        {
+            bestLecord = PlayerPrefs.GetInt("LecordLevel" + level.ToString());
+        }
+        else
+        {
+            bestLecord = 0;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -180,6 +194,18 @@ public class GameManager : MonoBehaviour
         end_Canvas.transform.GetChild(3).GetComponent<Text>().text = "성공 : " + sCnt;
         end_Canvas.transform.GetChild(4).GetComponent<Text>().text = "실패 : " + fCnt;
         end_Canvas.transform.GetChild(5).GetComponent<Text>().text = "점수 : " + totalPoint;
+
+        if (PlayerPrefs.HasKey("LecordLevel" + level.ToString()))
+        {
+            if(bestLecord < totalPoint)
+            {
+                PlayerPrefs.SetInt("LecordLevel" + level.ToString(), totalPoint);
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetInt("LecordLevel" + level.ToString(), totalPoint);
+        }
 
         end_Canvas.SetActive(true);
     }
